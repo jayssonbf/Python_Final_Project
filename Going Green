@@ -1,0 +1,93 @@
+# Jaysson Balbuena
+# Exercise selected: Lab 9.5
+# Name of program: Going Green
+# Description of program:  This program will prompt the user to enter
+# the energy bills from January to December for the year prior to going green
+# Next, allow the user to enter the energy bills from January to December of
+# the past year after going green.  The program should calculate the energy difference from
+# the two years and display the two years worth of data, along with the savings.
+
+
+def main():
+    #String username
+    username = " "
+#This will call the intro and print the initial message
+    intro()  
+#Prompt the user for his or her name
+    username = input("Enter your name: ")
+    #This module will be executed next
+    printGreeting(username)
+#Declare local variables
+    endProgram = "no"
+    while endProgram == "no":
+        notGreenCost = [0] * 12
+        goneGreenCost = [0] * 12
+        savings = [0] * 12
+        months = ["January", "February", "March", "April", "May", "June", "July", "August",\
+                  "September", "October", "November", "December"]
+#function calls
+        getNotGreen(notGreenCost,months)
+        getGoneGreen(goneGreenCost,months)
+        energySaved(notGreenCost,goneGreenCost,savings)
+        displayInfo(notGreenCost,goneGreenCost,savings,months)
+
+        endProgram = input("\nDo you want to end the program? Yes or no: ")
+    else:
+        print("\nGood bye! %s" % (username))
+
+        print("\nThank you for choosing us!" + \
+          " Have a great day!")
+
+def getNotGreen(notGreenCost,months):
+    counter = 0
+    for counter in range(12):
+        notGreenCost[counter] = int(input("Enter NOT GREEN energy costs for %s " % months[counter] + \
+                                   ": "))
+        counter = counter + 1
+        
+    print()
+ 
+def getGoneGreen(goneGreenCost,months):
+    counter = 0
+    for counter in range(12):
+        goneGreenCost[counter] = int(input("Enter GONE GREEN energy costs for %s " % months[counter] + \
+                                   ": "))
+        counter = counter + 1
+    print()
+    
+        
+def energySaved(notGreenCost,goneGreenCost,savings):
+    counter = 0
+    while counter < 12:
+        savings[counter] = int(notGreenCost[counter]) - int(goneGreenCost[counter])
+        counter = counter + 1
+        
+def displayInfo(notGreenCost,goneGreenCost,savings,months):
+    counter = 0
+    print()
+    print("                 Savings                     ")
+    print("_____________________________________________")
+    print(" Savings    Not Green    Gone Green    Months")
+
+    for counter in range(12):
+        print()
+        print("$",savings[counter], "       $",notGreenCost[counter], "     $"\
+              ,goneGreenCost[counter], "      $",months[counter])
+        
+        counter = counter + 1
+
+#This module will shows some love for the user
+def printGreeting(name):
+    print("\nHello! " + name + " I hope my program meets your expectations.")
+    print("Well, let's get started!\n")
+
+#This module will prints a intro message for the user
+def intro():
+    print("------------------------------------\n")
+    intro = "Welcome to going green program!\n"
+    print(intro.upper())
+    print("------------------------------------\n\n")
+
+
+main()
+
