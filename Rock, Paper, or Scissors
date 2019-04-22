@@ -1,0 +1,275 @@
+# Jaysson Balbuena
+# Exercise selected: Final project
+# Name of Porgram: Rock, Paper, and Scissors
+# Description of program: A program that allows two users to
+# play, rock, paper, and scissors
+
+#Import randint from random to let the cpu choose a random #
+from random import randint
+#Import Sys to exit a loop
+import sys
+#Local variables declared
+player_1_wins = 0
+player_2_wins = 0
+both_tie = 0
+computer_wins = 0
+#A list of items 
+options = ["ROCK", "PAPER", "SCISSORS"]
+
+#A message for the user using a dictionary 
+message = {"tie": "Yawn it's a tie!", 
+          "won": "Yay you won!",
+          "lost": "Aww you lost!"}
+# Main function
+def main():
+  print("\nHey! Let's play Rock, Paper, and Scissors.")
+  print("You will love it!\n")
+  select_menu = 0
+  print("\t------------")
+  print("\t  Main menu")
+  print("\t------------\n")
+  print("1. See the rules")
+  print("2. Play against the computer")
+  print("3. Play a two player game")
+  print("4. Quit")
+  #Varible to prompt user to select a menu
+  select_menu = int(input("\nSelect menu: "))
+  #A While loop to repeat the select menu variable in case a wrong number is entered
+  while select_menu < 1 or select_menu > 4:
+      print("\nERROR! Please select one of the options below!\n")
+      select_menu = int(input("\nSelect menu: "))
+#See rules option
+  if select_menu == 1:
+      rules()
+#Single player option
+  elif select_menu == 2:
+    play_computer()
+#Multiplayer option
+  elif select_menu == 3:
+    multiplayer()
+ #Exit the game option
+  elif select_menu == 4:
+      quitgame()
+#Multiplayer function to be called individually       
+def multiplayer():
+  endProgram = [""]
+  for endProgram in ["Yes", "yes", "y", "Y"]:
+    #Varibles that stored the returned value from player1_option and player2_option
+    user1 = player1_Option()
+    user2 = player2_Option()
+    print("")
+    #Call this function with its parameters 
+    determineWinner(user1, user2)
+    exitProgram = int(input("\n1. Play again\t\
+2. Return to main menu\t 3. Exit the game: "))
+    #A While loop to repeat the select menu variable in case a wrong number is entered
+    while exitProgram < 1 or exitProgram > 3:
+      print("\nERROR! Please select one of the options below.\n")
+      exitProgram = int(input("\n1. Play again\t\
+2. Return to main menu\t 3. Exit the game: "))
+    if exitProgram == 1:
+       multiplayer()
+    elif exitProgram == 2:
+          main()
+    else:
+        print("\nThanks for playing. Goodbye!")
+        sys.exit(0)
+                
+#This function executes to play a single player game   
+def play_computer():
+  while True:
+    computer_choice = computer_option()
+    user = user_option()
+    user_vs_computer(user, computer_choice)
+      
+# This function shows the rules of the game to the user
+def rules():
+  print("\t------------")
+  print("\t    Rules")
+  print("\t------------\n")
+  print("\n- Rock wins against scissors(the rock smashes the scissors).")
+  print("- Scissors win against paper(scissors cuts paper).")
+  print("- Paper wins against rock(paper wraps rock).\n")
+  option = int(input("Press 1 to return to the main menu.\t Press 2 to exit: "))
+  while option < 1 or option > 2:
+    print("\nERROR! Please select one of the two options below.\n")
+    option = int(input("Press 1 to return to the main menu.\t Press 2 to exit: "))
+    
+  if option == 1:
+     main()
+  else:
+    #Sys.exit(0) helps to quit the game in case the user chose to 
+      print("\nThanks for playing. Goodbye!")
+      sys.exit(0)
+#This function quits the game if the user wants to      
+def quitgame():
+  
+  print("\nAre you sure you want to quit the game?")
+  exitprogram = int(input("Press 1 to cancel. Press 2 to quit: "))
+  while exitprogram <1 or exitprogram > 2:
+      print("ERROR! Please select one of the two options below.\n")
+      exitprogram = int(input("\nPress 1 to cancel. Press 2 to quit: "))
+    
+  if exitprogram == 1:
+      main()
+  else:
+      print("\nThanks for playing. Good bye!")
+      sys.exit(0)
+#This function shows the weapon menu for player 1           
+def player1_Option():
+  print("\t------------")
+  print("\t Weapon menu")
+  print("\t------------\n")
+  print('Player 1\n')
+  print("1. Rock")
+  print("2. Paper")
+  print("3. Scissors")
+  print("4. Return to main menu")
+
+  user1 = int(input("\nChoose weapon: "))
+  if user1 == 1:
+    user1 = "ROCK"
+  elif user1 == 2:
+      user1 = "PAPER"
+  elif user1 == 3:
+      user1 = "SCISSORS"
+  elif user1 == 4:
+    main()
+  else:
+      print("\nInvalid! Please select one of the options below.")
+      player1_Option()
+  return user1
+#This function shows the weapon menu for player 2    
+def player2_Option():
+  print("\t------------")
+  print("\t Weapon menu")
+  print("\t------------\n")
+  print('Player 2\n')
+  print("1. Rock")
+  print("2. Paper")
+  print("3. Scissors")
+  print("4. Return to main menu")
+  
+  user2 = int(input("\nChoose weapon: "))
+  if user2 == 1:
+    user2 = "ROCK"
+  elif user2 == 2:
+      user2 = "PAPER"
+  elif user2 == 3:
+      user2 = "SCISSORS"
+  elif user2 == 4:
+    main()
+  else:
+      print("\nInvalid! Please select one of the options below.")
+      player2_Option()
+  return user2
+
+#This function determines who wins between the two players
+def determineWinner(user1, user2):
+  global player_1_wins
+  global player_2_wins
+  global both_tie
+  print ("Player 1 selected: %s" % (user1))
+  print ("Player 2 selected: %s" % (user2))
+  
+  if user1 == user2:
+    print("\nIt's a tie!")
+    both_tie += 1
+  elif user1 == options[0] and user2 == options[2]:
+      print("\nPlayer 1 wins")
+      player_1_wins += 1
+  elif user1 == options[1] and user2 == options[0]:
+      print ("\nPlayer 1 wins!")
+      player_1_wins += 1
+  elif user1 == options[2] and user2== options[1]:
+      print("\nPlayer 1 wins!")
+      player_1_wins += 1
+  else:
+      print("\nPlayer 2 wins")
+      player_2_wins += 1
+  print("")
+  print("Player 1 wins: " + str(player_1_wins))
+  print("Player 2 wins: " + str(player_2_wins))
+  print("Tie games: " + str(both_tie))
+  print("")
+# This function compares player 1 and player 2 scores   
+def user_vs_computer(user, computer_choice):
+  while True:
+    print("")
+    #Global constants to keep track with a counter 
+    global player_1_wins
+    global computer_wins
+    global both_tie
+    print ("\nYou selected: %s" % (user))
+    print ("Computer selected: %s" % (computer_choice))
+    if user == computer_choice:
+        print (message["tie"])
+        both_tie += 1
+      
+    if user == options[0] and computer_choice == options[2]:
+        print("")
+        print (message["won"])
+        player_1_wins += 1
+       
+    elif user == options[1] and computer_choice == options[0]:
+        print("")
+        print (message["won"])
+        player_1_wins += 1
+        
+    elif user == options[2] and computer_choice == options[1]:
+        print("")
+        print (message["won"])
+        player_1_wins += 1
+        
+    
+    else:
+        print("")
+        print (message["lost"])
+        computer_wins += 1  
+             
+    print("")
+    print("Player wins: %s" % str(player_1_wins))
+    print("Computer wins: %s" % str(computer_wins))
+    print("Tie games: %s" % str(both_tie))
+    print("")
+    
+    exitProgram = int(input("\n1. Play again\t\
+2. Return to main menu\t 3. Exit the game: "))
+    while exitProgram < 1 or exitProgram > 3:
+        print("\nERROR! Please select one of the options below.\n")
+        exitProgram = int(input("\n1. Play again\t\
+2. Return to main menu\t 3. Exit the game: "))
+    if exitProgram == 1:
+       play_computer()
+    elif exitProgram == 2:
+        main()
+    else:
+        print("\nThanks for playing. Goodbye!")
+        sys.exit(0)
+#This function randomly selects a weapon 
+def computer_option():
+  computer_choice = options[randint(0,2)]
+  if computer_choice == options[0]:
+    computer_choice = "ROCK"
+  elif computer_choice == options[1]:
+    computer_choice = "PAPER"
+  else:
+      computer_choice = "SCISSORS"
+  return computer_choice
+
+ #This function gets user input for weapon  
+def user_option():
+  
+  user = input("\nEnter Rock[r], Paper[p] or Scissors[s]: ")
+  if user in ["Rock", "rock", "R", "r"]:
+    user = "ROCK"
+  elif user in ["Paper", "paper", "P", "p"]:
+      user = "PAPER"
+  elif user in ["Scissors", "scissors", "S", "s"]:
+      user = "SCISSORS"
+  else:
+      print("\nInvalid! Please select one of the options below.")
+      user_choice()
+  return user
+
+main()
